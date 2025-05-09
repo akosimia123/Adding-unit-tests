@@ -46,4 +46,14 @@ class TestGuessingBot(unittest.TestCase):
         mock_socket.recv.side_effect = [
             b"Lower", b"Lower", b"Lower", b"CORRECT!"
         ]
-        
+    def test_binary_guess_all_higher(self):
+        # Simulate: guess 5 -> Higher, guess 8 -> Higher, guess 9 -> Higher, guess 10 -> CORRECT!
+        mock_socket = MagicMock()
+        mock_socket.recv.side_effect = [
+            b"Higher", b"Higher", b"Higher", b"CORRECT!"
+        ]
+        bot = GuessingBot(mock_socket)
+        self.assertEqual(bot.binary_guess(1, 10), 10)
+
+if __name__ == '__main__':
+    unittest.main()
