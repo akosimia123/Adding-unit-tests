@@ -17,3 +17,11 @@ class TestGuessingBot(unittest.TestCase):
         result = bot.choose_difficulty("2")
         self.assertEqual(result, (1, 50))
         mock_socket.sendall.assert_called_with(b"2\n")
+
+
+    def test_choose_difficulty_default_hard(self):
+        mock_socket = MagicMock()
+        bot = GuessingBot(mock_socket)
+        result = bot.choose_difficulty("99")
+        self.assertEqual(result, (1, 100))
+        mock_socket.sendall.assert_called_with(b"99\n")
