@@ -25,3 +25,9 @@ class TestGuessingBot(unittest.TestCase):
         result = bot.choose_difficulty("99")
         self.assertEqual(result, (1, 100))
         mock_socket.sendall.assert_called_with(b"99\n")
+    
+    def test_binary_guess_correct_first_try(self):
+        mock_socket = MagicMock()
+        mock_socket.recv.return_value = b"CORRECT!"
+        bot = GuessingBot(mock_socket)
+        self.assertEqual(bot.binary_guess(1, 10), 5)
