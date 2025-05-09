@@ -31,3 +31,11 @@ class TestGuessingBot(unittest.TestCase):
         mock_socket.recv.return_value = b"CORRECT!"
         bot = GuessingBot(mock_socket)
         self.assertEqual(bot.binary_guess(1, 10), 5)
+
+    def test_binary_guess_multiple_steps(self):
+        mock_socket = MagicMock()
+        mock_socket.recv.side_effect = [
+            b"Higher", b"Lower", b"Higher", b"CORRECT!"
+        ]
+        bot = GuessingBot(mock_socket)
+        self.assertEqual(bot.binary_guess(1, 10), 7)
